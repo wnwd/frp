@@ -1,0 +1,41 @@
+name: Release Check Actions
+on:
+  schedule:
+    - cron:  '5 2 * * *'
+  workflow_dispatch:
+env:  
+    TZ: Asia/Shanghai 
+jobs:
+  update-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        run: |
+            git config --global user.email "${{ secrets.EMAIL }}"
+            git config --global user.name "${{ secrets.NAME }}"
+            mkdir ~/.ssh
+            echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            git clone git@github.com:${{ github.repository }}.git
+      - name: check upstream update
+        id: check
+        run: |
+          cd frp
+          tag_data=$(curl --location 'https://api.github.com/repos/fatedier/frp/releases/latest')
+          latest_tag=$(echo $tag_data | jq '.tag_name' | tr -d '"')
+          body=$(echo $tag_data | jq '.body' | tr -d '"|#|*|\\n')
+          if ! [ "$(cat CURRENT_VERSION)" = $latest_tag ]
+          then
+            echo "发现新版本:$latest_tag ,准备更新..."
+            echo $latest_tag > CURRENT_VERSION
+            git add CURRENT_VERSION
+            git commit -m "$body"
+            git tag $latest_tag
+            git push origin $latest_tag
+          fi
+          current_date=$(date "+%Y-%m-%d %H:%M:%S")
+          replacement="Last checked on: $current_date , current frp version:$latest_tag ."
+          sed -i "\$s@.*@$replacement@g" README.md
+          git add README.md
+          git commit -m "Checked on $current_date"
+          git push origin main

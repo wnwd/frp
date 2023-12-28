@@ -1,0 +1,44 @@
+name: FRPC
+on:
+  push:
+    tags:    
+      - 'v*'
+  workflow_dispatch:
+env:
+  FRP_VERSION:
+jobs:
+  frpc-docker-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Read current versoon
+        run: |
+          echo FRP_VERSION=$(cat CURRENT_VERSION | tr -d 'v') >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.MY_GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: frpc
+          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          push: true
+          build-args: FRP_VERSION=${{ env.FRP_VERSION }}
+          tags: |
+            wnwd/frpc:${{ env.FRP_VERSION }}
+            ghcr.io/wnwd/frpc:${{ env.FRP_VERSION }}
+            wnwd/frpc:latest
+            ghcr.io/wnwd/frpc:latest

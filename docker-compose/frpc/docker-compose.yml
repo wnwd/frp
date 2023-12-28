@@ -1,0 +1,13 @@
+version: '3'
+services:
+  Frp:
+    image: 'wnwd/frpc:latest'
+    container_name: fprc
+    restart: unless-stopped
+    environment:
+      CONF_TYPE: 'yml'
+      # CONF_TYPE: 'toml'
+      # CONF_TYPE: 'json'
+    volumes:
+      - ./conf:/etc/frp
+    network_mode: 'host'
