@@ -25,6 +25,11 @@ docker run -d \
 -e CONF_TYPE=yml \
 -v ./conf:/etc/frp \
 wnwd/frps:latest
+
+# modify your config file (located ./conf/frpc.yml / json / toml)
+
+docker restart frps
+
 ```
 
 start frpc
@@ -36,6 +41,11 @@ docker run -d \
 -e CONF_TYPE=yml \
 -v ./conf:/etc/frp \
 wnwd/frpc:latest
+
+# modify your config file (located ./conf/frpc.yml / json / toml)
+
+docker restart frps
+
 ```
 
 
@@ -78,6 +88,10 @@ services:
 
 ```bash
 docker compose up -d
+# modify your config file
+
+docker restart frps # frpc
+
 ```
 
 ## Notice:
