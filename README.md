@@ -18,24 +18,24 @@ Supported architecture:
 ### Direct run:
 start frps
 ```bash
-docker run \
+docker run -d \
 --name frps \
--d wnwd/frps \
--v ./conf:/etc/frp \
--e CONF_TYPE=yml \
+--network host \
 --restart=always \
---network host
+-e CONF_TYPE=yml \
+-v ./conf:/etc/frp \
+wnwd/frps:latest
 ```
 
 start frpc
 ```bash
-docker run \
+docker run -d \
 --name frpc \
--d wnwd/frpc \
--v .conf:/etc/frp \
--e CONF_TYPE=yml \
+--network host \
 --restart=always \
---network host
+-e CONF_TYPE=yml \
+-v ./conf:/etc/frp \
+wnwd/frpc:latest
 ```
 
 
