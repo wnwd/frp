@@ -111,4 +111,4 @@ Environment variable `CONF_TYPE` was optional, valid values include `yml`, `json
 
 [Apache 2.0](https://github.com/wnwd/frp?tab=Apache-2.0-1-ov-file)
 
-Last checked on: 2024-01-02 10:31:31 , current frp version:v0.53.2 .
+Last checked on: 2024-01-03 10:29:22 , current frp version:v0.53.2 .
