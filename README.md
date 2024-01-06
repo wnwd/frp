@@ -57,7 +57,7 @@ version: '3'
 services:
   Frp:
     image: 'wnwd/frps:latest'
-    container_name: fprs
+    container_name: frps
     restart: unless-stopped
     environment:
       CONF_TYPE: 'yml'
@@ -75,7 +75,7 @@ version: '3'
 services:
   Frp:
     image: 'wnwd/frpc:latest'
-    container_name: fprc
+    container_name: frpc
     restart: unless-stopped
     environment:
       CONF_TYPE: 'yml'
