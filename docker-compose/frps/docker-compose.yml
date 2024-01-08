@@ -2,7 +2,7 @@ version: '3'
 services:
   Frp:
     image: 'wnwd/frps:latest'
-    container_name: fprs
+    container_name: frps
     restart: unless-stopped
     environment:
       CONF_TYPE: 'yml'
