@@ -98,6 +98,15 @@ docker restart frps # frpc
 Environment variable `CONF_TYPE` was optional, valid values include `yml`, `json` and `toml`, the defaule value was `yml`.
 
 
+## Update Timezone:
+For example: Change timezone to `Asia/Shanghai`
+```bash
+docker exec -it apk add tzdata \
+&& cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+&& echo "Shanghai/Asia" > /etc/timezone \
+&& apk del tzdata
+```
+
 ## Quick reference
 
 * Where to file issues:[https://github.com/wnwd/frp/issues](https://github.com/wnwd/frp/issues)
