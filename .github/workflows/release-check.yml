@@ -33,9 +33,12 @@ jobs:
             git tag $latest_tag
             git push origin $latest_tag
           fi
-          current_date=$(date "+%Y-%m-%d %H:%M:%S")
-          replacement="Last checked on: $current_date , current frp version:$latest_tag ."
-          sed -i "\$s@.*@$replacement@g" README.md
-          git add README.md
-          git commit -m "Checked on $current_date"
-          git push origin main
+          if [ "$(date '+%d')" == "01" ]
+          then
+            current_date=$(date "+%Y, %B")
+            replacement="Last checked on: $current_date , current frp version:$latest_tag ."
+            sed -i "\$s@.*@$replacement@g" README.md
+            git add README.md
+            git commit -m "Checked on $current_date"
+            git push origin main
+          fi
