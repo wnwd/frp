@@ -26,7 +26,7 @@ docker run -d \
 -v ./conf:/etc/frp \
 wnwd/frps:latest
 
-# modify your config file (located ./conf/frpc.yml / json / toml)
+# modify your config file (located ./conf/frps.yml / json / toml)
 
 docker restart frps
 
