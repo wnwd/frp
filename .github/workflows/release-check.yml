@@ -35,7 +35,7 @@ jobs:
           fi
           if [ "$(date '+%d')" == "01" ]
           then
-            current_date=$(date "+%Y, %B")
+            current_date=$(date "+%Y %B")
             replacement="Last checked on: $current_date , current frp version:$latest_tag ."
             sed -i "\$s@.*@$replacement@g" README.md
             git add README.md
