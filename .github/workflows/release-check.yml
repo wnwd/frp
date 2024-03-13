@@ -33,7 +33,7 @@ jobs:
             git tag $latest_tag
             git push origin $latest_tag
           fi
-          if [ "$(date '+%d')" == "01" ]
+          if [ "$(date '+%d')" == "01" ] || ! [ "$(cat CURRENT_VERSION)" = $latest_tag ]
           then
             current_date=$(date "+%Y %B")
             replacement="Last checked on: $current_date , current frp version:$latest_tag ."
