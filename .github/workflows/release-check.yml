@@ -24,7 +24,7 @@ jobs:
           tag_data=$(curl --location 'https://api.github.com/repos/fatedier/frp/releases/latest')
           latest_tag=$(echo $tag_data | jq '.tag_name' | tr -d '"')
           body=$(echo $tag_data | jq '.body' | tr -d '"|#|*|\\n')
-          if [ "$(date '+%d')" == "01" ] || ! [ "$(cat CURRENT_VERSION)" = $latest_tag ]
+          if [ "$(date '+%d')" = "01" ] || ! [ "$(cat CURRENT_VERSION)" = $latest_tag ]
           then
             echo "更新README.md信息"
             current_date=$(date "+%Y %B")
@@ -43,4 +43,6 @@ jobs:
             git push origin main
             git tag $latest_tag
             git push origin $latest_tag
+          else
+            echo "当前版本:$latest_tag为最新版本，无需更新。"
           fi
