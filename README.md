@@ -111,7 +111,6 @@ docker exec -it apk add tzdata \
 
 * Where to file issues:[https://github.com/wnwd/frp/issues](https://github.com/wnwd/frp/issues)
 
-* Maintained by:mapxn <https://github.com/mapxn>
 
 ## Website
 1. [fatedier/frp](https://github.com/fatedier/frp)
