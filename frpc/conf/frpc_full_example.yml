@@ -48,6 +48,9 @@ proxies:
     metadatas:
       var1: abc
       var2: "123"
+    annotations:
+      key1: value1
+      prefix/key2: value2
   - name: ssh_random
     type: tcp
     localIP: 192.168.31.100
@@ -74,12 +77,18 @@ proxies:
     requestHeaders:
       set:
         x-from-where: frp
+    responseHeaders:
+      set:
+        foo: bar
     healthCheck:
       type: http
       path: /status
       intervalSeconds: 10
       maxFailed: 3
       timeoutSeconds: 3
+      httpHeaders:
+        - name: x-from-where
+          value: frp
   - name: web02
     type: https
     localIP: 127.0.0.1
@@ -162,6 +171,24 @@ proxies:
       requestHeaders:
         set:
           x-from-where: frp
+  - name: plugin_http2http
+    type: tcp
+    remotePort: 6007
+    plugin:
+      type: http2http
+      localAddr: 127.0.0.1:80
+      hostHeaderRewrite: 127.0.0.1
+      requestHeaders:
+        set:
+          x-from-where: frp
+  - name: plugin_tls2raw
+    type: tcp
+    remotePort: 6008
+    plugin:
+      type: tls2raw
+      localAddr: 127.0.0.1:80
+      crtPath: ./server.crt
+      keyPath: ./server.key
   - name: secret_tcp
     type: stcp
     secretKey: abcdefg
@@ -177,6 +204,11 @@ proxies:
     allowUsers:
       - user1
       - user2
+  - name: vnet-server
+    type: stcp
+    secretKey: your-secret-key
+    plugin:
+      type: virtual_net
 visitors:
   - name: secret_tcp_visitor
     type: stcp
@@ -194,3 +226,11 @@ visitors:
     keepTunnelOpen: false
     maxRetriesAnHour: 8
     minRetryInterval: 90
+  - name: vnet-visitor
+    type: stcp
+    serverName: vnet-server
+    secretKey: your-secret-key
+    bindPort: -1
+    plugin:
+      type: virtual_net
+      destinationIP: 100.86.0.1

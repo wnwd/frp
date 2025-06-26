@@ -53,7 +53,6 @@ docker restart frps
 frps:
 ```yml
 # docker-compose.yml
-version: '3'
 services:
   Frp:
     image: 'wnwd/frps:latest'
@@ -71,7 +70,6 @@ services:
 frpc:
 ```yml
 # docker-compose.yml
-version: '3'
 services:
   Frp:
     image: 'wnwd/frpc:latest'
