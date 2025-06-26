@@ -3,234 +3,234 @@ serverAddr: 0.0.0.0
 serverPort: 7000
 loginFailExit: true
 log:
-  to: ./frpc.log
-  level: info
-  maxDays: 3
-  disablePrintColor: false
+    to: ./frpc.log
+    level: info
+    maxDays: 3
+    disablePrintColor: false
 auth:
-  method: token
-  token: "12345678"
+    method: token
+    token: "12345678"
 webServer:
-  addr: 127.0.0.1
-  port: 7400
-  user: admin
-  password: admin
-  pprofEnable: false
+    addr: 127.0.0.1
+    port: 7400
+    user: admin
+    password: admin
+    pprofEnable: false
 transport:
-  poolCount: 5
-  protocol: tcp
-  connectServerLocalIP: 0.0.0.0
-  tls:
-    enable: true
+    poolCount: 5
+    protocol: tcp
+    connectServerLocalIP: 0.0.0.0
+    tls:
+        enable: true
 udpPacketSize: 1500
 metadatas:
-  var1: abc
-  var2: "123"
+    var1: abc
+    var2: "123"
 proxies:
-  - name: ssh
-    type: tcp
-    localIP: 127.0.0.1
-    localPort: 22
-    transport:
-      bandwidthLimit: 1MB
-      bandwidthLimitMode: client
-      useEncryption: false
-      useCompression: false
-    remotePort: 6001
-    loadBalancer:
-      group: test_group
-      groupKey: "123456"
-    healthCheck:
+    - name: ssh
       type: tcp
-      timeoutSeconds: 3
-      maxFailed: 3
-      intervalSeconds: 10
-    metadatas:
-      var1: abc
-      var2: "123"
-    annotations:
-      key1: value1
-      prefix/key2: value2
-  - name: ssh_random
-    type: tcp
-    localIP: 192.168.31.100
-    localPort: 22
-    remotePort: 0
-  - name: dns
-    type: udp
-    localIP: 114.114.114.114
-    localPort: 53
-    remotePort: 6002
-  - name: web01
-    type: http
-    localIP: 127.0.0.1
-    localPort: 80
-    httpUser: admin
-    httpPassword: admin
-    subdomain: web01
-    customDomains:
-      - web01.yourdomain.com
-    locations:
-      - /
-      - /pic
-    hostHeaderRewrite: example.com
-    requestHeaders:
-      set:
-        x-from-where: frp
-    responseHeaders:
-      set:
-        foo: bar
-    healthCheck:
+      localIP: 127.0.0.1
+      localPort: 22
+      transport:
+          bandwidthLimit: 1MB
+          bandwidthLimitMode: client
+          useEncryption: false
+          useCompression: false
+      remotePort: 6001
+      loadBalancer:
+          group: test_group
+          groupKey: "123456"
+      healthCheck:
+          type: tcp
+          timeoutSeconds: 3
+          maxFailed: 3
+          intervalSeconds: 10
+      metadatas:
+          var1: abc
+          var2: "123"
+      annotations:
+          key1: value1
+          prefix/key2: value2
+    - name: ssh_random
+      type: tcp
+      localIP: 192.168.31.100
+      localPort: 22
+      remotePort: 0
+    - name: dns
+      type: udp
+      localIP: 114.114.114.114
+      localPort: 53
+      remotePort: 6002
+    - name: web01
       type: http
-      path: /status
-      intervalSeconds: 10
-      maxFailed: 3
-      timeoutSeconds: 3
-      httpHeaders:
-        - name: x-from-where
-          value: frp
-  - name: web02
-    type: https
-    localIP: 127.0.0.1
-    localPort: 8000
-    subdomain: web02
-    customDomains:
-      - web02.yourdomain.com
-    transport:
-      proxyProtocolVersion: v2
-  - name: tcpmuxhttpconnect
-    type: tcpmux
-    multiplexer: httpconnect
-    localIP: 127.0.0.1
-    localPort: 10701
-    customDomains:
-      - tunnel1
-  - name: plugin_unix_domain_socket
-    type: tcp
-    remotePort: 6003
-    plugin:
-      type: unix_domain_socket
-      unixPath: /var/run/docker.sock
-  - name: plugin_http_proxy
-    type: tcp
-    remotePort: 6004
-    plugin:
-      type: http_proxy
-      httpUser: abc
-      httpPassword: abc
-  - name: plugin_socks5
-    type: tcp
-    remotePort: 6005
-    plugin:
-      type: socks5
-      username: abc
-      password: abc
-  - name: plugin_static_file
-    type: tcp
-    remotePort: 6006
-    plugin:
-      type: static_file
-      localPath: /var/www/blog
-      stripPrefix: static
-      httpUser: abc
-      httpPassword: abc
-  - name: plugin_https2http
-    type: https
-    customDomains:
-      - test.yourdomain.com
-    plugin:
-      type: https2http
-      localAddr: 127.0.0.1:80
-      crtPath: ./server.crt
-      keyPath: ./server.key
-      hostHeaderRewrite: 127.0.0.1
+      localIP: 127.0.0.1
+      localPort: 80
+      httpUser: admin
+      httpPassword: admin
+      subdomain: web01
+      customDomains:
+          - web01.yourdomain.com
+      locations:
+          - /
+          - /pic
+      hostHeaderRewrite: example.com
       requestHeaders:
-        set:
-          x-from-where: frp
-  - name: plugin_https2https
-    type: https
-    customDomains:
-      - test.yourdomain.com
-    plugin:
-      type: https2https
-      localAddr: 127.0.0.1:443
-      crtPath: ./server.crt
-      keyPath: ./server.key
-      hostHeaderRewrite: 127.0.0.1
-      requestHeaders:
-        set:
-          x-from-where: frp
-  - name: plugin_http2https
-    type: http
-    customDomains:
-      - test.yourdomain.com
-    plugin:
-      type: http2https
-      localAddr: 127.0.0.1:443
-      hostHeaderRewrite: 127.0.0.1
-      requestHeaders:
-        set:
-          x-from-where: frp
-  - name: plugin_http2http
-    type: tcp
-    remotePort: 6007
-    plugin:
-      type: http2http
-      localAddr: 127.0.0.1:80
-      hostHeaderRewrite: 127.0.0.1
-      requestHeaders:
-        set:
-          x-from-where: frp
-  - name: plugin_tls2raw
-    type: tcp
-    remotePort: 6008
-    plugin:
-      type: tls2raw
-      localAddr: 127.0.0.1:80
-      crtPath: ./server.crt
-      keyPath: ./server.key
-  - name: secret_tcp
-    type: stcp
-    secretKey: abcdefg
-    localIP: 127.0.0.1
-    localPort: 22
-    allowUsers:
-      - "*"
-  - name: p2p_tcp
-    type: xtcp
-    secretKey: abcdefg
-    localIP: 127.0.0.1
-    localPort: 22
-    allowUsers:
-      - user1
-      - user2
-  - name: vnet-server
-    type: stcp
-    secretKey: your-secret-key
-    plugin:
-      type: virtual_net
+          set:
+              x-from-where: frp
+      responseHeaders:
+          set:
+              foo: bar
+      healthCheck:
+          type: http
+          path: /status
+          intervalSeconds: 10
+          maxFailed: 3
+          timeoutSeconds: 3
+          httpHeaders:
+              - name: x-from-where
+                value: frp
+    - name: web02
+      type: https
+      localIP: 127.0.0.1
+      localPort: 8000
+      subdomain: web02
+      customDomains:
+          - web02.yourdomain.com
+      transport:
+          proxyProtocolVersion: v2
+    - name: tcpmuxhttpconnect
+      type: tcpmux
+      multiplexer: httpconnect
+      localIP: 127.0.0.1
+      localPort: 10701
+      customDomains:
+          - tunnel1
+    - name: plugin_unix_domain_socket
+      type: tcp
+      remotePort: 6003
+      plugin:
+          type: unix_domain_socket
+          unixPath: /var/run/docker.sock
+    - name: plugin_http_proxy
+      type: tcp
+      remotePort: 6004
+      plugin:
+          type: http_proxy
+          httpUser: abc
+          httpPassword: abc
+    - name: plugin_socks5
+      type: tcp
+      remotePort: 6005
+      plugin:
+          type: socks5
+          username: abc
+          password: abc
+    - name: plugin_static_file
+      type: tcp
+      remotePort: 6006
+      plugin:
+          type: static_file
+          localPath: /var/www/blog
+          stripPrefix: static
+          httpUser: abc
+          httpPassword: abc
+    - name: plugin_https2http
+      type: https
+      customDomains:
+          - test.yourdomain.com
+      plugin:
+          type: https2http
+          localAddr: 127.0.0.1:80
+          crtPath: ./server.crt
+          keyPath: ./server.key
+          hostHeaderRewrite: 127.0.0.1
+          requestHeaders:
+              set:
+                  x-from-where: frp
+    - name: plugin_https2https
+      type: https
+      customDomains:
+          - test.yourdomain.com
+      plugin:
+          type: https2https
+          localAddr: 127.0.0.1:443
+          crtPath: ./server.crt
+          keyPath: ./server.key
+          hostHeaderRewrite: 127.0.0.1
+          requestHeaders:
+              set:
+                  x-from-where: frp
+    - name: plugin_http2https
+      type: http
+      customDomains:
+          - test.yourdomain.com
+      plugin:
+          type: http2https
+          localAddr: 127.0.0.1:443
+          hostHeaderRewrite: 127.0.0.1
+          requestHeaders:
+              set:
+                  x-from-where: frp
+    - name: plugin_http2http
+      type: tcp
+      remotePort: 6007
+      plugin:
+          type: http2http
+          localAddr: 127.0.0.1:80
+          hostHeaderRewrite: 127.0.0.1
+          requestHeaders:
+              set:
+                  x-from-where: frp
+    - name: plugin_tls2raw
+      type: tcp
+      remotePort: 6008
+      plugin:
+          type: tls2raw
+          localAddr: 127.0.0.1:80
+          crtPath: ./server.crt
+          keyPath: ./server.key
+    - name: secret_tcp
+      type: stcp
+      secretKey: abcdefg
+      localIP: 127.0.0.1
+      localPort: 22
+      allowUsers:
+          - "*"
+    - name: p2p_tcp
+      type: xtcp
+      secretKey: abcdefg
+      localIP: 127.0.0.1
+      localPort: 22
+      allowUsers:
+          - user1
+          - user2
+    - name: vnet-server
+      type: stcp
+      secretKey: your-secret-key
+      plugin:
+          type: virtual_net
 visitors:
-  - name: secret_tcp_visitor
-    type: stcp
-    serverName: secret_tcp
-    secretKey: abcdefg
-    bindAddr: 127.0.0.1
-    bindPort: 9000
-  - name: p2p_tcp_visitor
-    type: xtcp
-    serverUser: user1
-    serverName: p2p_tcp
-    secretKey: abcdefg
-    bindAddr: 127.0.0.1
-    bindPort: 9001
-    keepTunnelOpen: false
-    maxRetriesAnHour: 8
-    minRetryInterval: 90
-  - name: vnet-visitor
-    type: stcp
-    serverName: vnet-server
-    secretKey: your-secret-key
-    bindPort: -1
-    plugin:
-      type: virtual_net
-      destinationIP: 100.86.0.1
+    - name: secret_tcp_visitor
+      type: stcp
+      serverName: secret_tcp
+      secretKey: abcdefg
+      bindAddr: 127.0.0.1
+      bindPort: 9000
+    - name: p2p_tcp_visitor
+      type: xtcp
+      serverUser: user1
+      serverName: p2p_tcp
+      secretKey: abcdefg
+      bindAddr: 127.0.0.1
+      bindPort: 9001
+      keepTunnelOpen: false
+      maxRetriesAnHour: 8
+      minRetryInterval: 90
+    - name: vnet-visitor
+      type: stcp
+      serverName: vnet-server
+      secretKey: your-secret-key
+      bindPort: -1
+      plugin:
+          type: virtual_net
+          destinationIP: 100.86.0.1

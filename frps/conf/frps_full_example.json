@@ -1,76 +1,76 @@
 {
-   "bindAddr": "0.0.0.0",
-   "bindPort": 7000,
-   "kcpBindPort": 7000,
-   "transport": {
-      "maxPoolCount": 5,
-      "tls": {
-         "force": false
-      }
-   },
-   "vhostHTTPPort": 80,
-   "vhostHTTPSPort": 443,
-   "webServer": {
-      "addr": "127.0.0.1",
-      "port": 7500,
-      "user": "admin",
-      "password": "admin",
-      "pprofEnable": false
-   },
-   "enablePrometheus": true,
-   "log": {
-      "to": "./frps.log",
-      "level": "info",
-      "maxDays": 3,
-      "disablePrintColor": false
-   },
-   "detailedErrorsToClient": true,
-   "auth": {
-      "method": "token",
-      "token": "12345678",
-      "oidc": {
-         "issuer": "",
-         "audience": "",
-         "skipExpiryCheck": false,
-         "skipIssuerCheck": false
-      }
-   },
-   "allowPorts": [
-      {
-         "start": 2000,
-         "end": 3000
-      },
-      {
-         "single": 3001
-      },
-      {
-         "single": 3003
-      },
-      {
-         "start": 4000,
-         "end": 50000
-      }
-   ],
-   "maxPortsPerClient": 0,
-   "subDomainHost": "frps.com",
-   "udpPacketSize": 1500,
-   "natholeAnalysisDataReserveHours": 168,
-   "httpPlugins": [
-      {
-         "name": "user-manager",
-         "addr": "127.0.0.1:9000",
-         "path": "/handler",
-         "ops": [
-            "Login"
-         ]
-      },
-      {
-         "name": "port-manager",
-         "addr": "127.0.0.1:9001",
-         "path": "/handler",
-         "ops": [
-            "NewProxy"
-         ]
-      }
-   ]
+    "bindAddr": "0.0.0.0",
+    "bindPort": 7000,
+    "kcpBindPort": 7000,
+    "transport": {
+        "maxPoolCount": 5,
+        "tls": {
+            "force": false
+        }
+    },
+    "vhostHTTPPort": 80,
+    "vhostHTTPSPort": 443,
+    "webServer": {
+        "addr": "127.0.0.1",
+        "port": 7500,
+        "user": "admin",
+        "password": "admin",
+        "pprofEnable": false
+    },
+    "enablePrometheus": true,
+    "log": {
+        "to": "./frps.log",
+        "level": "info",
+        "maxDays": 3,
+        "disablePrintColor": false
+    },
+    "detailedErrorsToClient": true,
+    "auth": {
+        "method": "token",
+        "token": "12345678",
+        "oidc": {
+            "issuer": "",
+            "audience": "",
+            "skipExpiryCheck": false,
+            "skipIssuerCheck": false
+        }
+    },
+    "allowPorts": [
+        {
+            "start": 2000,
+            "end": 3000
+        },
+        {
+            "single": 3001
+        },
+        {
+            "single": 3003
+        },
+        {
+            "start": 4000,
+            "end": 50000
+        }
+    ],
+    "maxPortsPerClient": 0,
+    "subDomainHost": "frps.com",
+    "udpPacketSize": 1500,
+    "natholeAnalysisDataReserveHours": 168,
+    "httpPlugins": [
+        {
+            "name": "user-manager",
+            "addr": "127.0.0.1:9000",
+            "path": "/handler",
+            "ops": [
+                "Login"
+            ]
+        },
+        {
+            "name": "port-manager",
+            "addr": "127.0.0.1:9001",
+            "path": "/handler",
+            "ops": [
+                "NewProxy"
+            ]
+        }
+    ]
 }
