@@ -117,4 +117,4 @@ docker exec -it apk add tzdata \
 
 [Apache 2.0](https://github.com/wnwd/frp?tab=Apache-2.0-1-ov-file)
 
-Last checked on: 2025 July , current frp version:null .
+Last checked on: 2025 July , current frp version:v0.63.0 .
