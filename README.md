@@ -1,8 +1,8 @@
 # frp
 
 
-[![frp](http://dockeri.co/image/wnwd/frps)](https://hub.docker.com/r/wnwd/frps)
-[![frp](http://dockeri.co/image/wnwd/frpc)](https://hub.docker.com/r/wnwd/frpc)
+- [frps](https://hub.docker.com/r/wnwd/frps)
+- [frpc](https://hub.docker.com/r/wnwd/frpc)
 
 Unofficial docker image packaging for Frp.
 
