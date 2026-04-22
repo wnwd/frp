@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v6
       - name: Read current versoon
         run: |
-          echo FRP_VERSION=$(cat CURRENT_VERSION | tr -d 'v') >> $GITHUB_ENV
+          echo FRP_VERSION=$(cat versions.env | tr -d 'v') >> $GITHUB_ENV
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
