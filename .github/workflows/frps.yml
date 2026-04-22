@@ -38,7 +38,7 @@ jobs:
           push: true
           build-args: FRP_VERSION=${{ env.FRP_VERSION }}
           tags: |
-            ${{ github.repository }}s::${{ env.FRP_VERSION }}
+            ${{ github.repository }}s:${{ env.FRP_VERSION }}
             ghcr.io/${{ github.repository }}s:${{ env.FRP_VERSION }}
             ${{ github.repository }}s:latest
             ghcr.io/${{ github.repository }}s:latest
